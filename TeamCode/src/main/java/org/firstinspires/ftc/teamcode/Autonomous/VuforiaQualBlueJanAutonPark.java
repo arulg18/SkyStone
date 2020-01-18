@@ -7,8 +7,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.Control.AutonomousControl;
 import org.firstinspires.ftc.teamcode.Control.Crane;
 
-@Autonomous(name="Vuforia Qual Blue Jan Autonomous", group = "AA")
-public class VuforiaQualBlueJanAuton extends AutonomousControl {
+@Autonomous(name="Vuforia Qual TensorPark Blue Jan Autonomous", group = "AA")
+public class VuforiaQualBlueJanAutonPark extends AutonomousControl {
     private ElapsedTime runtime = new ElapsedTime();
 
     @Override
@@ -26,32 +26,22 @@ public class VuforiaQualBlueJanAuton extends AutonomousControl {
             sleep(100);
             rob.autonDownClaw.setPosition(0.7);
             sleep(100);
-            rob.driveTrainEncoderMovement(0.4, 15, 5, 0, Crane.movements.right);
-            rob.driveTrainEncoderMovement(0.4, 22.5, 5, 0, Crane.movements.cw);
-            double dist;
-
+            rob.driveTrainEncoderMovement(0.4, 5, 5, 0, Crane.movements.forward);
+            /*double dist;
             do {
-                rob.driveTrainMovement(0.1, Crane.movements.backward);
+                rob.driveTrainMovement(0.1, Crane.movements.right);
 
-                dist = rob.back.getDistance(DistanceUnit.INCH);
+                dist = rob.right.getDistance(DistanceUnit.INCH);
                 telemetry.addData("in front", "%.2f in", dist);
                 telemetry.update();
 
             }
-            while (dist > 1.5 || Double.compare(dist, Double.NaN) == 0 && opModeIsActive());
+            while (dist > 50 || Double.compare(dist, Double.NaN) == 0 && opModeIsActive());
 
-            rob.foundationServo1.setPosition(0.45);
-            rob.foundationServo2.setPosition(0.75);
-            sleep(100);
+            rob.autonGrabClaw.setPosition(0.20);
 
-            rob.driveTrainEncoderMovement(0.4, 22.5, 5, 0, Crane.movements.ccw);
-            rob.driveTrainEncoderMovement(0.4, 15, 4, 0, Crane.movements.backward);
-            rob.driveTrainEncoderMovement(0.4, 15, 4, 0, Crane.movements.right);
-            rob.foundationServo1.setPosition(1);
-            rob.foundationServo2.setPosition(0);
-
-
-
+            rob.driveTrainEncoderMovement(0.4, 36, 6, 0, Crane.movements.forward);
+//            rob.driveTrainEncoderMovement(0.4, 72 - 9 - rob.back.getDistance(Distance.INCH), 6, 0, Crane.movements.forward);
             /*
 
 

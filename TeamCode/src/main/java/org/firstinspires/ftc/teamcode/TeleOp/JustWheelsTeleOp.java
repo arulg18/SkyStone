@@ -12,12 +12,13 @@ import org.firstinspires.ftc.teamcode.Control.TeleOpControl;
 
 public class JustWheelsTeleOp extends TeleOpControl {
     private ElapsedTime runtime = new ElapsedTime();
+    boolean kill = false;
 
     @Override
     public void runOpMode() throws InterruptedException {
         boolean yToggle = false;
 
-        setup(runtime, Crane.setupType.teleop, Crane.setupType.drive, Crane.setupType.intake, Crane.setupType.claw, Crane.setupType.foundation, Crane.setupType.autonomous);
+        setup(runtime, Crane.setupType.teleop, Crane.setupType.drive, Crane.setupType.intake, Crane.setupType.claw, Crane.setupType.foundation);
 
         while (opModeIsActive()){
             standardGamepadData();
@@ -49,6 +50,12 @@ public class JustWheelsTeleOp extends TeleOpControl {
 
             if (gamepad1.y){
                 yToggle = !yToggle;
+            }
+            if(gamepad1.a){
+                kill = true;
+            }
+            if(gamepad1.x){
+                kill = false;
             }
 
 
@@ -120,19 +127,19 @@ public class JustWheelsTeleOp extends TeleOpControl {
 
  */
 //check point
-            if (gamepad2.a){
-                rob.rightServo.setPosition(0.50);
+            if (gamepad2.b){
+                rob.rightServo.setPosition(1);
             }
-            else if (gamepad2.b){
-                rob.rightServo.setPosition(0.70);
+            else if (gamepad2.a){
+                rob.rightServo.setPosition(0.55);
             }
 
             if (gamepad2.y){
-                rob.rotationservo.setPosition(0.35);
+                rob.rotationservo.setPosition(0.5);
             }
-            else if (gamepad2.x){
-                rob.rotationservo.setPosition(0.02);
-                rob.rightServo.setPosition(0.70);
+            if (gamepad1.b && !kill){
+                rob.rotationservo.setPosition(0.45);
+                rob.rightServo.setPosition(0.55);
 
                 while(rob.MaglimitSwitch2.getState()){
                     rob.extend.setPower(-0.5);
@@ -144,15 +151,6 @@ public class JustWheelsTeleOp extends TeleOpControl {
                 rob.rightLinear.setPower(0);
             }
 
-            if(gamepad2.dpad_down){
-                while(rob.MaglimitSwitch.getState()){
-                    rob.rightLinear.setPower(0.5);
-                }
-            }else if(gamepad2.dpad_up){
-                while(rob.MaglimitSwitch.getState()){
-                    rob.rightLinear.setPower(-1);
-                }
-            }
 
             if(gamepad2.right_trigger>0.5){
                 rob.rotationservo.setPosition(rob.rotationservo.getPosition() - 0.001);

@@ -117,6 +117,10 @@ public class Crane {
                     //setupLinearSlides();
                     setupClaw();
                     break;
+
+                case tfod:
+                    initTfod();
+                    break;
             }
 
             i.append(type.name()).append(" ");
@@ -264,8 +268,8 @@ public class Crane {
         //leftServo = servo(leftServos, Servo.Direction.REVERSE,0,1,0.5);
        // linearLimit = hardwareMap.digitalChannel.get(linearLimits);
         extend = motor(extendos, DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE);
-        rightServo = servo(rightServos, Servo.Direction.FORWARD,0,1,0.50);
-        rotationservo = servo(rotationservos, Servo.Direction.FORWARD,0,1,0.30);
+        rightServo = servo(rightServos, Servo.Direction.FORWARD,0.45,1,0.55);
+        rotationservo = servo(rotationservos, Servo.Direction.FORWARD,0,0.67,0.5);
         //clawLimit = hardwareMap.digitalChannel.get("clawLimit");
         MaglimitSwitch = hardwareMap.digitalChannel.get("clawLimit");
         MaglimitSwitch.setMode(DigitalChannel.Mode.INPUT);
@@ -298,8 +302,8 @@ public class Crane {
     }
 
     public void setupAutonClawTeleOp() throws InterruptedException{
-        autonDownClaw = servo(autonDownClaws, Servo.Direction.FORWARD,0,1,.7);
-        autonGrabClaw = servo(autonGrabClaws, Servo.Direction.FORWARD,0,1,0.50);
+        autonDownClaw = servo(autonDownClaws, Servo.Direction.FORWARD,0,1,.65);
+        autonGrabClaw = servo(autonGrabClaws, Servo.Direction.FORWARD,0,1,0.1);
     }
 
     public void setupEncoder() throws InterruptedException{
@@ -625,15 +629,14 @@ public class Crane {
 
 
     public void initTfod() {
-        int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
-                "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
-        tfodParameters.minimumConfidence = 0.8;
-        tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
-        tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
-
         if (ClassFactory.getInstance().canCreateTFObjectDetector()) {
-            initTfod();
+            int tfodMonitorViewId = hardwareMap.appContext.getResources().getIdentifier(
+                    "tfodMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+            TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
+            tfodParameters.minimumConfidence = 0.8;
+            tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
+            tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_FIRST_ELEMENT, LABEL_SECOND_ELEMENT);
+            central.telemetry.addLine("works");
         } else {
             central.telemetry.addData("Sorry!", "This device is not compatible with TFOD");
         }
@@ -645,6 +648,9 @@ public class Crane {
         if (tfod != null) {
             tfod.activate();
         }
+
+
+
     }
 
     public void setupCamera() throws InterruptedException{
@@ -823,7 +829,7 @@ public class Crane {
         central.sleep(5000);
 
         while (calculateDifferenceBetweenAngles(end, getDirection()) < -0.25 && central.opModeIsActive()) {
-            driveTrainMovement(0.05, (direction == turnside.cw) ? movements.ccw : movements.cw);
+            driveTrainMovement(0.1, (direction == turnside.cw) ? movements.ccw : movements.cw);
             central.telemetry.addLine("Correctional Try ");
             central.telemetry.addData("IMU Inital: ", start);
             central.telemetry.addData("IMU Final Projection: ", end);
@@ -917,7 +923,7 @@ public class Crane {
         ON, OFF;
     }
     public enum setupType{
-        autonomous, teleop, endgame, drive, camera, claw, bSystem, foundation, yellow, encoder, intake, ultrasoinc, imu;
+        autonomous, teleop, endgame, drive, camera, claw, tfod, bSystem, foundation, yellow, encoder, intake, ultrasoinc, imu;
     }
 
 
