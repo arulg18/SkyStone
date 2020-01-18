@@ -248,7 +248,8 @@ public abstract class AutonomousControl extends Central {
 
     public void valueBased() throws InterruptedException{
         double dist = 0;
-        if (rob.tfod != null) {
+        double currTime = runtime.milliseconds();
+        while (rob.tfod != null && rob.blockNumber == 0 && runtime.milliseconds() - currTime < 1500) {
             // getUpdatedRecognitions() will return null if no new information is available since
             // the last time that call was made.
             List<Recognition> updatedRecognitions = rob.tfod.getUpdatedRecognitions();
@@ -257,6 +258,17 @@ public abstract class AutonomousControl extends Central {
                 // step through the list of recognitions and display boundary info.
                 int i = 0;
                 for (Recognition recognition : updatedRecognitions) {
+                    if (recognition.getLabel().equals("Skystone")){
+                        if (recognition.getLeft() < 100){
+                            rob.blockNumber = 1;
+                        }
+                        else if (recognition.getLeft() < 350){
+                            rob.blockNumber = 2;
+                        }
+                        else if (recognition.getLeft() < 500){
+                            rob.blockNumber = 3;
+                        }
+                    }
                     telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
                     telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
                             recognition.getLeft(), recognition.getTop());
@@ -267,9 +279,26 @@ public abstract class AutonomousControl extends Central {
             }
         }
 
+        if (rob.blockNumber == 0){
+            telemetry.addLine("BlockNumber: DEFAULT");
+        }
+        else if (rob.blockNumber == 1){
+            telemetry.addLine("BlockNumber: LEFT");
+        }
+        else if (rob.blockNumber == 2){
+            telemetry.addLine("BlockNumber: CENTER");
+
+        }
+        else if (rob.blockNumber ==3){
+            telemetry.addLine("BlockNumber: RIGHT");
+        }
+
+        telemetry.update();
 
 
         switch(rob.blockNumber){
+            case 0:
+                break;
             case 1:
                 do {
                     rob.driveTrainMovement(0.1, Crane.movements.forward);
@@ -283,6 +312,7 @@ public abstract class AutonomousControl extends Central {
                 identify1();
                 identify3();
                 clawDown();
+                break;
             case 2:
                 do {
                     rob.driveTrainMovement(0.1, Crane.movements.forward);
@@ -296,6 +326,7 @@ public abstract class AutonomousControl extends Central {
                 identify1();
                 identify3();
                 clawDown();
+                break;
             case 3:
                 do {
                     rob.driveTrainMovement(0.1, Crane.movements.forward);
@@ -309,6 +340,7 @@ public abstract class AutonomousControl extends Central {
                 identify1();
                 identify3();
                 clawDown();
+                break;
         }
     }
 
