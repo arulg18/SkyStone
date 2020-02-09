@@ -12,16 +12,16 @@ public class WheelsTest extends AutonomousControl {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        setup(runtime, Crane.setupType.autonomous);
+        setup(runtime, Crane.setupType.drive);
 
         if(opModeIsActive()){
-            //rob.driveTrainEncoderMovement(.1, 12,30,0, Crane.movements.forward);
-            //sleep(2000);
-            //rob.driveTrainEncoderMovement(.1, 12,10,0, Crane.movements.backward);
-            //sleep(2000);
-            rob.driveTrainEncoderMovement(.1, 12,10,0, Crane.movements.left);
+            rob.driveTrainEncoderMovement(.1, 12,5,0, Crane.movements.forward);
             sleep(2000);
-            rob.driveTrainEncoderMovement(.1, 12,10,0, Crane.movements.right);
+            rob.driveTrainEncoderMovement(.1, 12,5,0, Crane.movements.backward);
+            sleep(2000);
+            rob.driveTrainEncoderMovement(.1, 12,5,0, Crane.movements.left);
+            sleep(2000);
+            rob.driveTrainEncoderMovement(.1, 12,5,0, Crane.movements.right);
 
         }
     }

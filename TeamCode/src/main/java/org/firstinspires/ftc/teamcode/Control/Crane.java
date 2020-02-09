@@ -38,6 +38,7 @@ import static org.firstinspires.ftc.robotcore.external.tfod.TfodSkyStone.TFOD_MO
 import static org.firstinspires.ftc.teamcode.Control.Constants.COUNTS_PER_COREHEXMOTOR_INCH;
 import static org.firstinspires.ftc.teamcode.Control.Constants.COUNTS_PER_GOBUILDA312RPM_INCH;
 import static org.firstinspires.ftc.teamcode.Control.Constants.COUNTS_PER_GOBUILDA312RPM_ROT;
+import static org.firstinspires.ftc.teamcode.Control.Constants.COUNTS_PER_GOBUILDA435RPM_INCH;
 import static org.firstinspires.ftc.teamcode.Control.Constants.COUNTS_PER_INCH;
 import static org.firstinspires.ftc.teamcode.Control.Constants.COUNTS_PER_MOTOR_GOBUILDA312RPM;
 import static org.firstinspires.ftc.teamcode.Control.Constants.COUNTS_PER_MOTOR_REV;
@@ -319,7 +320,7 @@ public class Crane {
         back = ultrasonicSensor(backs);
         left = ultrasonicSensor(lefts);
         right = ultrasonicSensor(rights);
-        color = MRColor(colors);
+        //color = MRColor(colors);
 
     }
 
@@ -413,7 +414,7 @@ public class Crane {
 
             for (DcMotor motor : drivetrain){
                 int x = Arrays.asList(drivetrain).indexOf(motor);
-                targets[x] = motor.getCurrentPosition() + (int) (signs[x] * wheelAdjust[x] * distance * COUNTS_PER_GOBUILDA312RPM_INCH);
+                targets[x] = motor.getCurrentPosition() + (int) (signs[x] * wheelAdjust[x] * distance * COUNTS_PER_GOBUILDA435RPM_INCH);
             }
             for (DcMotor motor: drivetrain){
                 int x = Arrays.asList(drivetrain).indexOf(motor);
@@ -471,7 +472,7 @@ public class Crane {
 
             for (DcMotor motor : motors){
                 int x = Arrays.asList(motors).indexOf(motor);
-                targets[x] = motor.getCurrentPosition() + (int) (signs[x] * wheelAdjust[x] * distance * COUNTS_PER_GOBUILDA312RPM_INCH);
+                targets[x] = motor.getCurrentPosition() + (int) (signs[x] * wheelAdjust[x] * distance * COUNTS_PER_GOBUILDA435RPM_INCH);
             }
             for (DcMotor motor: motors){
                 int x = Arrays.asList(motors).indexOf(motor);
@@ -940,16 +941,17 @@ public class Crane {
     }
 
     //-------------------CHOICE ENUMS-------------------------
-    public enum movements {
+    public enum movements
+    {
         // FR FL BR BL
         right(1, 1, -1, -1),
         left(-1, -1, 1, 1),
-        backward(0.94, -0.94, 0.94, -0.94),
-        forward(-0.94, 0.94, -0.94, 0.94),
-        tr(0, -1, 1, 0),
-        tl(1, 0, 0, -1),
-        bl(0, 1, -1, 0),
-        br(-1, 0, 0, 1),
+        backward(1, -1, 1, -1),
+        forward(-1, 1, -1, 1),
+        br(0, -1, 1, 0),
+        bl(1, 0, 0, -1),
+        tl(0, 1, -1, 0),
+        tr(-1, 0, 0, 1),
         cw(1, 1, 1, 1),
         ccw(-1, -1, -1, -1),
         cwback(-1, -1, 0, 0),
