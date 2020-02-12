@@ -19,7 +19,7 @@ public class Constants {
     public static final double COUNTS_PER_MOTOR_COREHEXMOTOR = 288;
     public static final double DRIVE_GEAR_REDUCTION = 1.0;
     public static final double DRIVE_GEAR_REDUCTION_NEW = 2.0/3.0;
-    public static final double DRIVE_GEAR_REDUCTION_EVENNEWER = 1.0/2.0;
+    public static final double DRIVE_GEAR_REDUCTION_EVENNEWER = 2.0;
     public static final double WHEEL_DIAMETER_INCHES = 4.0;
     public static final double WHEEL_DIAMETER_INCHES_NEW = 3.94;
     public static final double SPOOL_DIAMETER_INCHES = 1.25;

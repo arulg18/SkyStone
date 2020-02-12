@@ -829,7 +829,7 @@ public class Crane {
         }
         central.sleep(5000);
 
-        while (calculateDifferenceBetweenAngles(end, getDirection()) < -0.25 && central.opModeIsActive()) {
+        while (calculateDifferenceBetweenAngles(getDirection(), end) < -0.25 && central.opModeIsActive()) {
             driveTrainMovement(0.1, (direction == turnside.cw) ? movements.ccw : movements.cw);
             central.telemetry.addLine("Correctional Try ");
             central.telemetry.addData("IMU Inital: ", start);
@@ -907,12 +907,12 @@ public class Crane {
         central.telemetry.update();
     }
 
-    public double calculateDifferenceBetweenAngles(double firstAngle, double secondAngle)
+    public double calculateDifferenceBetweenAngles(double firstAngle, double secondAngle) // negative is secondAngle ccw relative to firstAngle
     {
         double difference = secondAngle - firstAngle;
         while (difference < -180) difference += 360;
         while (difference > 180) difference -= 360;
-        return difference;
+        return -difference;
     }
 
     public double getDirection(){

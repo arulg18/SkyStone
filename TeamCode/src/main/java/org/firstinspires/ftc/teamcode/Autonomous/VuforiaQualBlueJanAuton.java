@@ -14,7 +14,7 @@ public class VuforiaQualBlueJanAuton extends AutonomousControl {
     @Override
     public void runOpMode() throws InterruptedException {
         //setup(runtime, Crane.setupType.drive, Crane.setupType.foundation, Crane.setupType.imu, Crane.setupType.claw, Crane.setupType.ultrasoinc, Crane.setupType.autonomous, Crane.setupType.camera, Crane.setupType.tfod);
-        setup(runtime, Crane.setupType.drive, Crane.setupType.camera);
+        setup(runtime, Crane.setupType.drive, Crane.setupType.camera, Crane.setupType.ultrasoinc, Crane.setupType.tfod);
 
         if(opModeIsActive()){
 

@@ -638,25 +638,75 @@ public abstract class AutonomousControl extends Central {
                 telemetry.addData("# Object Detected", updatedRecognitions.size());
                 // step through the list of recognitions and display boundary info.
                 int i = 0;
-                for (Recognition recognition : updatedRecognitions) {
-                    if (recognition.getLabel().equals("Skystone")){
-                        if (recognition.getLeft() < 100){
-                            rob.blockNumber = 1;
+                if (updatedRecognitions.size() == 2) {
+
+                    float skystone = -1;
+                    float stone1 = -1;
+                    float stone2 = -1;
+                    for (Recognition recognition : updatedRecognitions) {
+                        if (recognition.getLabel().equals("Skystone")) {
+                            skystone = recognition.getLeft();
                         }
-                        else if (recognition.getLeft() < 350){
+                        else if (recognition.getLabel().equals("Stone")){
+                            if (stone1 == -1){
+                                stone1 = recognition.getLeft();
+                            }else {
+                                stone2 = recognition.getLeft();
+                            }
+                        }
+                        telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                        telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                                recognition.getLeft(), recognition.getTop());
+                        telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                                recognition.getRight(), recognition.getBottom());
+                    }
+                    telemetry.update();
+
+                    if (skystone == -1){
+                        rob.blockNumber = 3;
+                    }
+                    else {
+                        if (skystone > stone1){
                             rob.blockNumber = 2;
                         }
-                        else if (recognition.getLeft() < 500){
-                            rob.blockNumber = 3;
+                        else {
+                            rob.blockNumber = 1;
                         }
                     }
-                    telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
-                    telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
-                            recognition.getLeft(), recognition.getTop());
-                    telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
-                            recognition.getRight(), recognition.getBottom());
                 }
-                telemetry.update();
+                else if (updatedRecognitions.size() == 3){
+                    float skystone = -1;
+                    float stone1 = -1;
+                    float stone2 = -1;
+                    for (Recognition recognition : updatedRecognitions) {
+                        if (recognition.getLabel().equals("Skystone")) {
+                            skystone = recognition.getLeft();
+                        }
+                        else if (recognition.getLabel().equals("Stone")){
+                            if (stone1 == -1){
+                                stone1 = recognition.getLeft();
+                            }else {
+                                stone2 = recognition.getLeft();
+                            }
+                        }
+                        telemetry.addData(String.format("label (%d)", i), recognition.getLabel());
+                        telemetry.addData(String.format("  left,top (%d)", i), "%.03f , %.03f",
+                                recognition.getLeft(), recognition.getTop());
+                        telemetry.addData(String.format("  right,bottom (%d)", i), "%.03f , %.03f",
+                                recognition.getRight(), recognition.getBottom());
+                    }
+                    telemetry.update();
+
+                    if (skystone > stone1 && skystone > stone2){
+                        rob.blockNumber = 3;
+                    }
+                    else if (skystone > stone1 || skystone > stone2){
+                        rob.blockNumber = 2;
+                    }
+                    else {
+                        rob.blockNumber = 1;
+                    }
+                }
             }
         }
 
@@ -676,7 +726,7 @@ public abstract class AutonomousControl extends Central {
 
 
         telemetry.update();
-        sleep(100);
+        sleep(20000);
 
 
 
@@ -686,7 +736,7 @@ public abstract class AutonomousControl extends Central {
                 do {
                     rob.driveTrainMovement(0.15, Crane.movements.backward);
 
-                    dist = rob.front.getDistance(DistanceUnit.INCH);
+                    dist = rob.back.getDistance(DistanceUnit.INCH);
                     telemetry.addData("in front", "%.2f in", dist);
                     telemetry.update();
 
@@ -698,7 +748,7 @@ public abstract class AutonomousControl extends Central {
                 do {
                     rob.driveTrainMovement(0.15, Crane.movements.forward);
 
-                    dist = rob.front.getDistance(DistanceUnit.INCH);
+                    dist = rob.back.getDistance(DistanceUnit.INCH);
                     telemetry.addData("in front", "%.2f in", dist);
                     telemetry.update();
 
@@ -710,7 +760,7 @@ public abstract class AutonomousControl extends Central {
                 do {
                     rob.driveTrainMovement(0.5, Crane.movements.forward);
 
-                    dist = rob.front.getDistance(DistanceUnit.INCH);
+                    dist = rob.back.getDistance(DistanceUnit.INCH);
                     telemetry.addData("in front", "%.2f in", dist);
                     telemetry.update();
 
@@ -733,7 +783,7 @@ public abstract class AutonomousControl extends Central {
         do {
             rob.driveTrainMovement(0.1, Crane.movements.right);
 
-            dist = rob.right.getDistance(DistanceUnit.INCH);
+            dist = rob.back.getDistance(DistanceUnit.INCH);
             telemetry.addData("in front", "%.2f in", dist);
             telemetry.update();
 

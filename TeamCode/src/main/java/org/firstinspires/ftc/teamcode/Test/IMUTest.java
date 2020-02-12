@@ -16,7 +16,6 @@ public class IMUTest extends AutonomousControl {
 
         if(opModeIsActive()){
             rob.turn(90, Crane.turnside.ccw, 0.5, Crane.axis.center);
-            sleep(500);
             //rob.turn(180, Crane.turnside.cw, 0.5, Crane.axis.center);
             sleep(50000);
             /*rob.turn(270, Crane.turnside.cw, 0.5, Crane.axis.center);
