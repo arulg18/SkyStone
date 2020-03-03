@@ -232,13 +232,12 @@ public abstract class AutonomousControl extends Central {
                         telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
 
                         if (((translation.get(1) / rob.mmPerInch) > 0.95)) {
-                            rob.driveTrainMovement(0.02, Crane.movements.forward);
+                            rob.driveTrainMovement(0.5, Crane.movements.forward);
                         } else if ((translation.get(1) / rob.mmPerInch) < -1.2) {
-                            rob.driveTrainMovement(0.02, Crane.movements.backward);
-                        }
-                        else{
+                            rob.driveTrainMovement(0.5, Crane.movements.backward);
+                        } else {
                             rob.stopDrivetrain();
-                            rob.moving1= true;
+                            rob.moving1 = true;
                         }
 /*
                         if (((translation.get(1) / rob.mmPerInch) < -1 && !moving2) && ((VuforiaTrackableDefaultListener) trackable.getListener()).isVisible()) {
@@ -265,7 +264,7 @@ public abstract class AutonomousControl extends Central {
                     }
                     telemetry.addData("x: ", rob.x);
                     telemetry.addData("y: ", rob.y);
-                   // telemetry.update();
+                    // telemetry.update();
 
                 } else {
                     telemetry.addData("bad", "none");
@@ -273,7 +272,7 @@ public abstract class AutonomousControl extends Central {
             }
 
             telemetry.update();
-
+/*
             double dist = rob.front.getDistance(DistanceUnit.INCH);
             if(dist > (32.5 - (blockNumber - 1) * 7.5)){
                 rob.driveTrainMovement(0.02, Crane.movements.forward);
@@ -291,9 +290,13 @@ public abstract class AutonomousControl extends Central {
                 telemetry.addData("StopUltraFB: ", dist);
             }
         }
+*/
 
 
+        }
     }
+
+
 
     public void identify2() throws InterruptedException {
         for (VuforiaTrackable trackable : rob.allTrackables) {
@@ -408,12 +411,12 @@ public abstract class AutonomousControl extends Central {
                         }
                         */
 
-                        if (((translation.get(0) / rob.mmPerInch) < -3.1)) {
-                            rob.driveTrainMovement(0.08, Crane.movements.left);
+                        if (((translation.get(0) / rob.mmPerInch) < -5.1)) {
+                            rob.driveTrainMovement(0.5, Crane.movements.left);
                             rob.straight = true;
 
-                        } else if ((translation.get(0) / rob.mmPerInch) > -2.9)  {
-                            rob.driveTrainMovement(0.08, Crane.movements.right);
+                        } else if ((translation.get(0) / rob.mmPerInch) > -4.9)  {
+                            rob.driveTrainMovement(0.5, Crane.movements.right);
                             rob.straight = true;
 
                         }
@@ -431,15 +434,15 @@ public abstract class AutonomousControl extends Central {
             }
 
 
-
+/*
             double dist = rob.left.getDistance(DistanceUnit.INCH);
-            if(dist > 3){
-                rob.driveTrainMovement(0.08, Crane.movements.left);
+            if(dist > 5){
+                rob.driveTrainMovement(.5, Crane.movements.left);
                 telemetry.addData("moveLeftUltra: ", dist);
 
             }
-            else if (dist < 2){
-                rob.driveTrainMovement(0.08, Crane.movements.right);
+            else if (dist < 4){
+                rob.driveTrainMovement(0.5, Crane.movements.right);
                 telemetry.addData("moveRightUltra: ", dist);
 
             }
@@ -450,7 +453,10 @@ public abstract class AutonomousControl extends Central {
 
             }
 
+ */
+
             telemetry.update();
+
         }
 
 
@@ -587,6 +593,7 @@ public abstract class AutonomousControl extends Central {
         if (!rob.moving3){
             return;
         }
+        /*
         clawDown();
         rob.autonDownClaw.setPosition(0.6);
         do {
@@ -601,6 +608,7 @@ public abstract class AutonomousControl extends Central {
         rob.driveTrainEncoderMovement(0.1, 51, 5, 0, Crane.movements.forward);
 
 
+         */
 
        /* rob.driveTrainEncoderMovement(0.1, 38, 5, 0, Crane.movements.forward);
         do {
@@ -726,7 +734,7 @@ public abstract class AutonomousControl extends Central {
 
 
         telemetry.update();
-        sleep(20000);
+        sleep(200);
 
 
 
@@ -734,14 +742,14 @@ public abstract class AutonomousControl extends Central {
 
             case 1:
                 do {
-                    rob.driveTrainMovement(0.15, Crane.movements.backward);
+                    rob.driveTrainMovement(0.5, Crane.movements.backward);
 
                     dist = rob.back.getDistance(DistanceUnit.INCH);
                     telemetry.addData("in front", "%.2f in", dist);
                     telemetry.update();
 
                 }
-                while (dist < 29.5 || Double.compare(dist, Double.NaN) == 0 && opModeIsActive());
+                while (dist < 40 || Double.compare(dist, Double.NaN) == 0 && opModeIsActive());
 
                 break;
             case 2:
@@ -769,19 +777,20 @@ public abstract class AutonomousControl extends Central {
 
                 break;
             case 0:
-                rob.driveTrainEncoderMovement(0.2, 10, 3, 0, Crane.movements.backward);
+                rob.driveTrainEncoderMovement(0.5, 10, 3, 0, Crane.movements.backward);
                 rob.blockNumber = 1;
                 break;
         }
         rob.stopDrivetrain();
-        identify1(rob.blockNumber);
         identify3();
+        identify1(rob.blockNumber);
         if (!rob.moving3){
             return;
         }
+        /*
         clawDown();
         do {
-            rob.driveTrainMovement(0.1, Crane.movements.right);
+            rob.driveTrainMovement(0.5, Crane.movements.right);
 
             dist = rob.back.getDistance(DistanceUnit.INCH);
             telemetry.addData("in front", "%.2f in", dist);
@@ -789,7 +798,7 @@ public abstract class AutonomousControl extends Central {
 
         }
         while (dist > 23 || Double.compare(dist, Double.NaN) == 0 && opModeIsActive());
-        rob.driveTrainEncoderMovement(0.1, 38, 5, 0, Crane.movements.backward);
+        rob.driveTrainEncoderMovement(0.5, 38, 5, 0, Crane.movements.backward);
         /*
         do {
             rob.driveTrainMovement(0.1, Crane.movements.backward);

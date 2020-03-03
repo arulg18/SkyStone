@@ -8,7 +8,7 @@ import org.firstinspires.ftc.teamcode.Control.TeleOpControl;
 
 @TeleOp(name = "Test", group = "Concept")
 
-
+//j
 
 public class Test extends TeleOpControl {
     private ElapsedTime runtime = new ElapsedTime();
@@ -19,12 +19,33 @@ public class Test extends TeleOpControl {
         boolean yToggle = false;
 
         //setup(runtime, Crane.setupType.teleop, Crane.setupType.drive, Crane.setupType.intake, Crane.setupType.claw, Crane.setupType.foundation);
+        //setup(runtime, Crane.setupType.drive, Crane.setupType.foundation, Crane.setupType.intake);
+        //setup(runtime, Crane.setupType.intake);
         setup(runtime, Crane.setupType.drive);
 
         while (opModeIsActive()) {
             standardGamepadData();
+/*
+            if(gamepad1.left_trigger>.1){
+                rob.rightSuck.setPower(-1);
+                rob.leftSuck.setPower(1);
+            }else if(gamepad1.right_trigger>.1){
+                rob.rightSuck.setPower(1);
+                rob.leftSuck.setPower(-1);
+            }else{
+                rob.rightSuck.setPower(0);
+                rob.leftSuck.setPower(0);
 
+            }
 
+            if(gamepad1.dpad_up){
+                rob.foundationServo1.setPosition(1);
+                rob.foundationServo2.setPosition(0);
+            }else if (gamepad1.dpad_down) {
+                rob.foundationServo1.setPosition(0.57);
+                rob.foundationServo2.setPosition(0.63);
+            }
+*/
             if (!yToggle) {
                 if (g(0)) {
                     rob.driveTrainMovement(fb, Crane.movements.forward);
@@ -73,7 +94,8 @@ public class Test extends TeleOpControl {
                 } else {
                     rob.stopDrivetrain();
                 }
-            }
+                }
+            
             telemetry.addData("speed1", fb);
             telemetry.addData("speed2", rl);
         }

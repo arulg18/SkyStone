@@ -291,8 +291,8 @@ public class Crane {
         rightSuck = motor(rightsucks, DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE);
         leftSuck = motor(leftsucks, DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE);
 
-        smallRSuck = servo(smallRSucks, DcMotorSimple.Direction.FORWARD, 0);
-        smallLSuck = servo(smallLSucks, DcMotorSimple.Direction.FORWARD, 0);
+        //smallRSuck = servo(smallRSucks, DcMotorSimple.Direction.FORWARD, 0);
+        //smallLSuck = servo(smallLSucks, DcMotorSimple.Direction.FORWARD, 0);
 
         encoder(EncoderMode.OFF, rightSuck, leftSuck);
     }
