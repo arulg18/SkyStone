@@ -22,8 +22,13 @@ public class ClawTest extends TeleOpControl {
         if (opModeIsActive()){
             //rob.encodeCoreHexMovement(1, 3, 10, 0, Crane.movements.linearUp, rob.rightLinear);
             //rob.encodeCoreHexMovement(1, 4, 10, 0, Crane.movements.clawOut, rob.extend);
-            rob.rotationservo.setPosition(0.5);
-            rob.rightServo.setPosition(1);
+            //rob.rotationservo.setPosition(0.5);
+            //rob.rightServo.setPosition(1);
+            rob.clawTR.setPosition(0);
+            rob.clawBR.setPosition(0);
+            rob.clawBL.setPosition(1);
+            rob.clawTL.setPosition(1);
+            sleep(10000);
         }
     }
 }

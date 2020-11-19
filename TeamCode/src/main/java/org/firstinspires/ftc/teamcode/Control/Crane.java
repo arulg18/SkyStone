@@ -47,6 +47,10 @@ import static org.firstinspires.ftc.teamcode.Control.Constants.LABEL_SECOND_ELEM
 import static org.firstinspires.ftc.teamcode.Control.Constants.autonDownClaws;
 import static org.firstinspires.ftc.teamcode.Control.Constants.autonGrabClaws;
 import static org.firstinspires.ftc.teamcode.Control.Constants.backs;
+import static org.firstinspires.ftc.teamcode.Control.Constants.clawBLS;
+import static org.firstinspires.ftc.teamcode.Control.Constants.clawBRS;
+import static org.firstinspires.ftc.teamcode.Control.Constants.clawTLS;
+import static org.firstinspires.ftc.teamcode.Control.Constants.clawTRS;
 import static org.firstinspires.ftc.teamcode.Control.Constants.colors;
 import static org.firstinspires.ftc.teamcode.Control.Constants.encoderupS;
 import static org.firstinspires.ftc.teamcode.Control.Constants.extendos;
@@ -212,6 +216,8 @@ public class Crane {
 
     public Servo servo, autonDownClaw, autonGrabClaw;
 
+    public Servo clawTR, clawTL, clawBR, clawBL;
+
     public Servo rotationservo, rightServo, leftServo, foundationServo1, foundationServo2;
     public CRServo smallRSuck, smallLSuck;
 
@@ -263,22 +269,26 @@ public class Crane {
 
 
     public void setupClaw() throws InterruptedException {
+        clawTR = servo(clawTRS, Servo.Direction.FORWARD,0,1,.5);
+        clawTL = servo(clawTLS, Servo.Direction.FORWARD,0,1,.5);
+        clawBR = servo(clawBRS, Servo.Direction.FORWARD,0,1,.5);
+        clawBL = servo(clawBLS, Servo.Direction.FORWARD,0,1,.5);
         //leftLinear = motor(leftLinears, DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE);
-        rightLinear = motor(rightLinears, DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE);
-        encoder(EncoderMode.ON, rightLinear);
+        //rightLinear = motor(rightLinears, DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE);
+        //encoder(EncoderMode.ON, rightLinear);
         //leftServo = servo(leftServos, Servo.Direction.REVERSE,0,1,0.5);
        // linearLimit = hardwareMap.digitalChannel.get(linearLimits);
-        extend = motor(extendos, DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE);
-        rightServo = servo(rightServos, Servo.Direction.FORWARD,0.45,1,0.55);
-        rotationservo = servo(rotationservos, Servo.Direction.FORWARD,0,0.67,0.5);
+        //extend = motor(extendos, DcMotorSimple.Direction.FORWARD, DcMotor.ZeroPowerBehavior.BRAKE);
+        //rightServo = servo(rightServos, Servo.Direction.FORWARD,0.45,1,0.55);
+        //rotationservo = servo(rotationservos, Servo.Direction.FORWARD,0,0.67,0.5);
         //clawLimit = hardwareMap.digitalChannel.get("clawLimit");
-        MaglimitSwitch = hardwareMap.digitalChannel.get("clawLimit");
-        MaglimitSwitch.setMode(DigitalChannel.Mode.INPUT);
-        MaglimitSwitch.setState(true);
+        //MaglimitSwitch = hardwareMap.digitalChannel.get("clawLimit");
+        //MaglimitSwitch.setMode(DigitalChannel.Mode.INPUT);
+        //MaglimitSwitch.setState(true);
 
-        MaglimitSwitch2 = hardwareMap.digitalChannel.get("clawLimit2");
-        MaglimitSwitch2.setMode(DigitalChannel.Mode.INPUT);
-        MaglimitSwitch2.setState(true);
+        //MaglimitSwitch2 = hardwareMap.digitalChannel.get("clawLimit2");
+        //MaglimitSwitch2.setMode(DigitalChannel.Mode.INPUT);
+        //MaglimitSwitch2.setState(true);
 
     }
 

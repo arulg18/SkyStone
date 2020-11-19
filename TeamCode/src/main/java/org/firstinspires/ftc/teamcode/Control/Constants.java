@@ -69,6 +69,10 @@ public class Constants {
     public static final String extendos = "extend";
     public static final String rightServos = "rightservo";
     public static final String leftServos = "leftservo";
+    public static final String clawTRS = "clawTR";
+    public static final String clawBRS = "clawBR";
+    public static final String clawBLS = "clawBL";
+    public static final String clawTLS = "clawTL";
     public static final String flimits = "flimit";
     public static final String blimits = "blimit";
     public static final String linearLimits = "linearLimit";
